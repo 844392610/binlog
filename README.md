@@ -1,2 +1,3 @@
 # binlog
-简单的binlog解析项目，帮助开发人员更好的理解canal，dts,otter等数据库数据同步框架
+简单的binlog解析项目，帮助开发人员更好的理解canal，dts,otter等数据库数据同步框架;
+感兴趣的同学可以补充实现下ExtUpdateRowsHandler，可以加深理解
