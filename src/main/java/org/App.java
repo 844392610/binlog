@@ -4,6 +4,8 @@ import com.github.shyiko.mysql.binlog.BinaryLogClient;
 import com.github.shyiko.mysql.binlog.event.*;
 import com.github.shyiko.mysql.binlog.event.deserialization.EventDeserializer;
 import com.mysql.cj.MysqlType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xmbds.event.TransactionWatch;
 import org.xmbds.meta.ColumnMeta;
 import org.xmbds.meta.DbMeta;
@@ -22,6 +24,7 @@ import java.util.*;
  */
 public class App 
 {
+    private static Logger logger = LoggerFactory.getLogger(App.class);
 
     public static void main( String[] args ) throws Exception {
         initData();
@@ -60,7 +63,8 @@ public class App
                         int[] columnIndexs = bitSet.stream().toArray();
                         String tableName = transactionWatch.getTableName(tableId);
                         String sql = transactionWatch.generatorSql(event.getHeader().getEventType(),tableName,columnIndexs,eventData.getRows(),null);
-                        System.out.println(sql);
+                        logger.info(sql);
+
                     }
                     break;
                     case EXT_DELETE_ROWS:{
@@ -70,7 +74,7 @@ public class App
                         int[] columnIndexs = bitSet.stream().toArray();
                         String tableName = transactionWatch.getTableName(tableId);
                         String sql = transactionWatch.generatorSql(event.getHeader().getEventType(),tableName,columnIndexs,eventData.getRows(),null);
-                        System.out.println(sql);
+                        logger.info(sql);
                     }
                     break;
                     case EXT_UPDATE_ROWS:{
@@ -80,7 +84,8 @@ public class App
                         int[] columnIndexs = bitSet.stream().toArray();
                         String tableName = transactionWatch.getTableName(tableId);
                         String sql = transactionWatch.generatorSql(event.getHeader().getEventType(),tableName,columnIndexs,null,eventData.getRows());
-                        System.out.println(sql);
+                        logger.info(sql);
+
                     }
                     break;
                     case XID:{
@@ -88,7 +93,7 @@ public class App
                     }
                     break;
                 }
-                System.out.println(event);
+                logger.info(event.toString());
             }
         });
         client.connect();
